@@ -163,12 +163,13 @@ exports.playCmd = rl => {
             let id = Math.floor(aleatorio);
             //sacar  la pregunta asociada a ese id;
             var actual = porResponder[id];
-            //var quiz = model.getByIndex(id);
+            const quiz = model.getByIndex(id);
             //const quiz = porResponder [id];
-           // log (`$(`)
-            rl.question (log(colorize(`${quiz.question}:  `,'red')), answer => {
+            log (`${quiz.question}`);
+            rl.question(colorize(' Introduzca una respuesta ', 'red'), answer => {
+            //rl.question (log(colorize(`${quiz.question}:  `,'red')), answer => {
                  //quitamos simbolos, espacios y mayusc
-                 var oficial= actual.answer.toLowerCase().trim();
+                 var oficial= quiz.answer.toLowerCase().trim();
                  var resp =answer.toLowerCase().trim();
                     //comprobamos si la respuesta es correcta
                     if( resp === oficial) {
