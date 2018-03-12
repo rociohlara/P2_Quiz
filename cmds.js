@@ -165,7 +165,7 @@ exports.playCmd = rl => {
             var actual = porResponder[id];
             //var quiz = model.getByIndex(id);
             //const quiz = porResponder [id];
-            rl.question (console.log(colorize(`${actual.question}:  `,'red')), answer => {
+            rl.question (log(colorize(`${actual.question}:  `,'red')), answer => {
                  //quitamos simbolos, espacios y mayusc
                  var oficial= actual.answer.toLowerCase().trim();
                  var resp =answer.toLowerCase().trim();
@@ -177,8 +177,8 @@ exports.playCmd = rl => {
                         log (`CORRECTO - Lleva ${score} aciertos.`);
                         biglog ('correcta', 'green');
                         playOne();
-				}
-				rl.prompt();
+				    }
+				    rl.prompt();
 
 			});
  	    }
