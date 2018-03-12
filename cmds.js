@@ -165,7 +165,8 @@ exports.playCmd = rl => {
             var actual = porResponder[id];
             //var quiz = model.getByIndex(id);
             //const quiz = porResponder [id];
-            rl.question (log(colorize(`${actual.question}:  `,'red')), answer => {
+           // log (`$(`)
+            rl.question (log(colorize(`${quiz.question}:  `,'red')), answer => {
                  //quitamos simbolos, espacios y mayusc
                  var oficial= actual.answer.toLowerCase().trim();
                  var resp =answer.toLowerCase().trim();
