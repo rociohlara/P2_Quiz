@@ -118,10 +118,10 @@ exports.testCmd = (rl, id) => {
 			 var resp= resp2.toLowerCase();
                 //comprobamos si la respuesta es correcta
             	if( resp === quiz.answer.toLowerCase()) {
-            		log ('Su respuesta es correcta. ');
+            		log (`Su respuesta es correcta. `);
 					biglog ('Correcta', 'green');
 				} else {
-					log ('Su respuesta es incorrecta. ');
+					log (`Su respuesta es incorrecta. `);
 					biglog ('Incorrecta', 'red');
 				}
 				rl.prompt();
@@ -136,56 +136,51 @@ exports.testCmd = (rl, id) => {
 	
 };
 
-//va sacando preguntas en orden aleatorio. Se acaba si contestas a todo correctamente
 exports.playCmd = rl => {
     let score = 0;
-	let porResponder = [];
-	let totalPreguntas = model.getAll();
-
+	var porResponder = [];
+	var totalPreguntas =model.count();
 	//enumeramos las que quedan por responder. Metemos los id existentes
 	for( let i = 0; i < model.count(); i++){
-		porResponder [i]=i;
+		//porResponder[i] = model.getByIndex(i) ;
 	}
-
-    
     const playOne = () => {
-	if (porResponder===0) {
-		log('No hay que preguntar','black');
-		log('Fin del juego. Aciertos:', score);
-		biglog (score, 'magenta');
-		rl.prompt();
-	}else{
-		//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
-		let id = Math.floor(Math.random()*porResponder.length);
-        //sacar  la pregunta asociada a ese id;
-        //let quiz = model.getByIndex(id);
-        let quiz = porResponder [id];
-
-		//console.log(colorize(`${quiz.question}`,'red'));
-		rl.question (console.log(colorize(`${quiz.question}`,'red')), answer =>{
-             //quitamos simbolos, espacios y mayusc
-			 var resp1= answer.replace(/[^a-zA-Z 0-9.]+/g, '');
-			 var resp2= resp1.trim();
-			 var resp= resp2.toLowerCase();
-			 var oficial1 = quiz.answer;
-			 var oficial =oficial1.toLowerCase();
-                //comprobamos si la respuesta es correcta
-            	if( resp === oficial) {
-            		log ('CORRECTO - Lleva', score, 'aciertos.');
-					score= core + 1;
-				} else {
-					log ('INCORRECTO - Ha conseguido ', score, 'aciertos');
-					biglog ('Incorrecta', 'red');
-					log ('fin del juego');
-				}
-				rl.prompt();
-
-			});	
-		//quitarla del array
-		porResponder.splice(id,1);
+		if (totalPreguntas === 0) {
+			log(`No hay que preguntar `);
+			log(`Fin del juego. Aciertos: ${score} `);
+			biglog (score, 'magenta');
+			rl.prompt();
+		} else {
+			//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
+			let aleatorio= Math.random()*porResponder.length;
+			let id = (Math.floor(aleatorio));
+	        //sacar  la pregunta asociada a ese id;
+	        var actual = porResponder[id];
+	        const quiz = model.getByIndex(id);
+		    //const quiz = porResponder [id];
+			rl.question (console.log(colorize(`${quiz.question}:  `,'red')), answer => {
+	             //quitamos simbolos, espacios y mayusc
+				 var resp= quiz.answer.trim().toLowerCase();
+				 var oficial =answer.trim().toLowerCase();
+	                //comprobamos si la respuesta es correcta
+	            	if( resp === oficial) {
+	            		//porResponder.model.deleteByIndex(id);
+	            		model.deleteByIndex(id);
+	            		score ++;
+	            		totalPreguntas --;
+	            		log (`CORRECTO - Lleva ${score} aciertos.`);
+	            		biglog ('correcta', 'green');
+	            		layOne();
+					} else {
+						log(` INCORRECTO - Ha conseguido ${score} aciertos `);
+						biglog ('Ipncorrecta', 'red');
+						log (`fin del juego`);
+						rl.prompt();
+					}
+				});
+		//porResponder.splice(id,1);
  	    }
  	}
- 		
  	playOne();	
 };
 
@@ -194,7 +189,7 @@ exports.playCmd = rl => {
 //nombre del autor de la practica
 exports.creditsCmd = rl => {
         console.log('Autor de la práctica');
-        console.log('Rocio Hernandez Lara');
+        console.log('RROCIO HERNANDEZ LARA');
         rl.prompt();
 };
 
