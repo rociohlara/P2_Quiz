@@ -1,4 +1,3 @@
-
 const fs = require ("fs");
 const DB_FILENAME = "quizzers.json";
 
@@ -13,10 +12,10 @@ let quizzers =[
 	question: "Capital de Italia",
 	answer: "Roma"
 },
-{
-	question: "Capital de Francia",
-	answer: "París"
-},
+//{
+//	question: "Capital de Francia",
+//	answer: "París"
+//},
 {
 	question: "Capital de España",
 	answer: "Madrid"
@@ -27,7 +26,7 @@ let quizzers =[
 }
 ];
 
-//funciones para tratar wl fichero
+//funciones para tratar el fichero
 
 const load = () => {
 	fs.readFile(DB_FILENAME, (error, data) => {
@@ -39,11 +38,11 @@ const load = () => {
 	             }
 	             throw error;
 		    }
-	    let json = JSON.parse(data);
-	    if (json) {
-	    	quizzers = json;
-	    }
-		});
+	        let json = JSON.parse(data);
+	        if (json) {
+	    	     quizzers = json;
+	        }
+    });
 };
 
 const save = () => {
