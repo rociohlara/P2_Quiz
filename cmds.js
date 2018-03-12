@@ -146,8 +146,8 @@ exports.playCmd = rl => {
 
 	//enumeramos las que quedan por responder. Metemos los id existentes
 	for( let i = 0; i < model.count(); i++){
-		porResponder [i]=i;
-        //porResponder[i] = model.getByIndex(i);
+		//porResponder [i]=i;
+        porResponder[i] = model.getByIndex(i);
 	}
 
     
@@ -159,13 +159,14 @@ exports.playCmd = rl => {
 		rl.prompt();
 	}else{
 		//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
-            //var preguntas = model.count;
+            
+            var preguntas = model.count;
            // let aleatorio= Math.random()*preguntas;
             let id = Math.floor(Math.random()*restantes);
             //sacar  la pregunta asociada a ese id;
-           // var actual = porResponder[id];
+            var actual = porResponder[id];
             //const quiz = porResponder[id];
-             const quiz = model.getByIndex(id);
+            const quiz = model.getByIndex(id);
 			log(` [${ colorize(id, 'magenta')}]: ${quiz.question}`);
             //log (`${quiz.question}`);
             rl.question(colorize(' Su respuesta ', 'red'), answer => {
