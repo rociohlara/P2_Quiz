@@ -1,5 +1,6 @@
 const model = require("./model");
 const {log, biglog, errorlog, colorize} = require("./out");
+const readline = require('readline');
 
 //funcion de ayuda que muestra los distintos comandos
 exports.helpCmd = rl => {
@@ -157,7 +158,7 @@ exports.playCmd = rl => {
 		rl.prompt();
 	}else{
 		//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
-            var preguntas = porResponder.length;
+            var preguntas = totalPreguntas;
             let aleatorio= Math.random()*preguntas;
             let id = Math.floor(aleatorio);
             //sacar  la pregunta asociada a ese id;
