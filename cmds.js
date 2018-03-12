@@ -19,7 +19,6 @@ exports.helpCmd = rl => {
 };
 
 
-
 //muestra una lista de las preguntas que existen
 exports.listCmd = rl => {
 	model.getAll().forEach((quiz, id) => {
@@ -154,7 +153,7 @@ exports.playCmd = rl => {
     
     const playOne = () => {
 	if (porResponder===0) {
-		log('No hay que preguntar');
+		log('No hay mas que preguntar');
 		log('Fin del juego. Aciertos:', score);
 		biglog (score, 'magenta');
 		rl.prompt();
