@@ -1,14 +1,14 @@
 const fs = require ("fs");
-const DB_FILENAME = "quizzers.json";
+const DB_FILENAME = "quizzes.json";
 const readline = require('readline');
 
 
 
 //modelo de datos
-//esta variable se mantiene todos los quizzers existentes
+//esta variable se mantiene todos los quizzes existentes
 //es un array de objetos, donde cada objet tiene los atributos questio
 //y answer para guardar el texto de la pregunta y el de la respuesta
-let quizzers =[
+let quizzes =[
 {
 	question: "Capital de Italia",
 	answer: "Roma"
@@ -41,14 +41,14 @@ const load = () => {
 		    }
 	        let json = JSON.parse(data);
 	        if (json) {
-	    	     quizzers = json;
+	    	     quizzes = json;
 	        }
     });
 };
 
 const save = () => {
 	fs.writeFile(DB_FILENAME,
-		JSON.stringify(quizzers),
+		JSON.stringify(quizzes),
 		error => {
 			if (error){
 			 throw error;
@@ -64,11 +64,11 @@ const save = () => {
 //metodos:
 
 //1.count: devuelve el numero de preguntas existentes
-exports.count =() => quizzers.length;
+exports.count =() => quizzes.length;
 
 //2.add: añade un nuevo quizz
 exports.add =(question, answer) => {
-	quizzers.push({
+	quizzes.push({
          question: (question || "").trim(),
          answer: (answer || "").trim(),
 	});
@@ -77,11 +77,11 @@ exports.add =(question, answer) => {
 
 //3.update: actualiza el quiz situado en la posicion index
 exports.update = (id, question, answer) => {
-	const quiz = quizzers [id];
+	const quiz = quizzes [id];
 	if (typeof quiz ==="undefined"){
 		throw new Error (`El valor del parametro id no es valido.`)
 	}
-	quizzers.splice(id, 1,{
+	quizzes.splice(id, 1,{
 		question: (question || "").trim(),
         answer: (answer || "").trim()
 	});
@@ -89,11 +89,11 @@ exports.update = (id, question, answer) => {
 };
 
 //4.getAll: devuelve todos los quiz existentes (una clonacion)
-exports.getAll = () => JSON.parse(JSON.stringify(quizzers));
+exports.getAll = () => JSON.parse(JSON.stringify(quizzes));
 
 //5.getByIndex: devuelve un clon del quiz almacenado en la posicion dada
 exports.getByIndex = id => {
-    const quiz = quizzers [id];
+    const quiz = quizzes [id];
     if (typeof quiz === "undefined") {
     	throw new Error (`El valor del parametro id no es valido`);
     }
@@ -102,11 +102,11 @@ exports.getByIndex = id => {
 
 //6.deleteByIndex: elimina el quiz situado en la posicion dada
 exports.deleteByIndex = id => {
-    const quiz = quizzers [id];
+    const quiz = quizzes [id];
     if (typeof quiz === "undefined") {
     	throw new Error (`El valor del parametro id no es valido`);
     }
-    quizzers.splice(id, 1);
+    quizzes.splice(id, 1);
     save();
 };
 
