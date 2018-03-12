@@ -142,43 +142,53 @@ exports.playCmd = rl => {
     let score = 0;
 	let porResponder = [];
 	let totalPreguntas = model.getAll();
+	porResponder.length = model.count();
+	let restantes = porResponder.length;
 
 	//enumeramos las que quedan por responder. Metemos los id existentes
 	for( let i = 0; i < model.count(); i++){
-		//porResponder [i]=i;
-        porResponder[i] = model.getByIndex(i);
+		porResponder [i]=i;
+        //porResponder[i] = model.getByIndex(i);
 	}
 
     
     const playOne = () => {
 	if (porResponder===0) {
 		log('No hay que preguntar');
-		log('Fin del juego. Aciertos:');
+		log('Fin del juego. Aciertos:', score);
 		biglog (score, 'magenta');
 		rl.prompt();
 	}else{
 		//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
-            var preguntas = model.count;
-            let id = Math.trunc(Math.random()*preguntas);
+            //var preguntas = model.count;
+           // let aleatorio= Math.random()*preguntas;
+            let id = Math.floor(Math.random()*restantes);
             //sacar  la pregunta asociada a ese id;
-            //var actual = porResponder[id];
-            var quiz = model.getByIndex(id);
-
-            log (`${quiz.question}`);
-            rl.question(colorize(' Introduzca una respuesta ', 'red'), answer => {
+           // var actual = porResponder[id];
+            //const quiz = porResponder[id];
+             const quiz = model.getByIndex(id);
+			log(` [${ colorize(id, 'magenta')}]: ${quiz.question}`);
+            //log (`${quiz.question}`);
+            rl.question(colorize(' Su respuesta ', 'red'), answer => {
+            //rl.question (log(colorize(`${quiz.question}:  `,'red')), answer => {
                  //quitamos simbolos, espacios y mayusc
                  var oficial= quiz.answer.toLowerCase().trim();
-                 var resp =answer.toLowerCase().trim();
+                 var resp = answer.toLowerCase().trim();
                     //comprobamos si la respuesta es correcta
                     if( resp === oficial) {
+                        model.deleteByIndex(id);
                         score ++;
                         totalPreguntas --;
                         log (`CORRECTO - Lleva ${score} aciertos.`);
                         biglog ('correcta', 'green');
-                        model.deleteByIndex(id);
                         playOne();
-				    }
+				    } else {
+				    	 log (`INCORRECTO - HA CONSEGUIDO ${score} aciertos.`);
+                         biglog ('correcta', 'green');
+                         log (`FIN`);
+				   
 				    rl.prompt();
+				}
 
 			});
  	    }
