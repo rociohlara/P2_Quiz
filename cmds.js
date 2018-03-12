@@ -151,42 +151,7 @@ exports.playCmd = rl => {
 
     
     const playOne = () => {
-	if (porResponder===0) {
-		log('No hay que preguntar','black');
-		log('Fin del juego. Aciertos:', score);
-		biglog (score, 'magenta');
-		rl.prompt();
-	}else{
-		//let id = pregunta al azar de por responder (num aleatorio: math.random()*porResponder)
-            var preguntas = totalPreguntas;
-            let aleatorio= Math.random()*preguntas;
-            let id = Math.floor(aleatorio);
-            //sacar  la pregunta asociada a ese id;
-            var actual = porResponder[id];
-            const quiz = model.getByIndex(id);
-            //const quiz = porResponder [id];
-            log (`${quiz.question}`);
-            rl.question(colorize(' Introduzca una respuesta ', 'red'), answer => {
-            //rl.question (log(colorize(`${quiz.question}:  `,'red')), answer => {
-                 //quitamos simbolos, espacios y mayusc
-                 var oficial= quiz.answer.toLowerCase().trim();
-                 var resp =answer.toLowerCase().trim();
-                    //comprobamos si la respuesta es correcta
-                    if( resp === oficial) {
-                        model.deleteByIndex(id);
-                        score ++;
-                        totalPreguntas --;
-                        log (`CORRECTO - Lleva ${score} aciertos.`);
-                        biglog ('correcta', 'green');
-                        playOne();
-				    }
-				    rl.prompt();
-
-			});
- 	    }
- 	}
- 		
- 	playOne();	
+	
 };
 
 
